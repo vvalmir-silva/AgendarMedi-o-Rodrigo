@@ -45,88 +45,103 @@
     <nav class="bg-white shadow-lg border-b-4 border-purple-500">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-ruler-combined text-2xl text-custom-purple"></i>
-                    <h1 class="text-2xl font-bold text-gray-800">AgendarMedição Rodrigo</h1>
+                    <i class="fas fa-ruler-combined text-xl sm:text-2xl text-custom-purple"></i>
+                    <h1 class="text-lg sm:text-2xl font-bold text-gray-800">AgendarMedição</h1>
                 </div>
-                <div class="flex space-x-4">
-                    <button onclick="showSection(form39)" class="nav-btn px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors">
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-2 lg:space-x-4">
+                    <button onclick="showSection(form)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-sm lg:text-base">
+                        <i class="fas fa-plus mr-1 lg:mr-2"></i>
+                        <span class="hidden lg:inline">Novo </span>Agendamento
+                    </button>
+                    <button onclick="showSection(dashboard)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-sm lg:text-base">
+                        <i class="fas fa-chart-dashboard mr-1 lg:mr-2"></i>Dashboard
+                    </button>
+                    <button onclick="showSection(list)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-sm lg:text-base">
+                        <i class="fas fa-list mr-1 lg:mr-2"></i>Agendamentos
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-600 hover:text-purple-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-2">
+                    <button onclick="showSection(form); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-left">
                         <i class="fas fa-plus mr-2"></i>Novo Agendamento
                     </button>
-                    <button onclick="showSection(dashboard39)" class="nav-btn px-4 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors">
+                    <button onclick="showSection(dashboard); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-left">
                         <i class="fas fa-chart-dashboard mr-2"></i>Dashboard
                     </button>
-                    <button onclick="showSection(list39)" class="nav-btn px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors">
+                    <button onclick="showSection(list); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-left">
                         <i class="fas fa-list mr-2"></i>Agendamentos
                     </button>
                 </div>
             </div>
         </div>
     </nav>
-
-    <div class="container mx-auto px-4 py-8">
-        <!-- Formulário de Agendamento -->
+<div class="container mx-auto px-2 sm:px-4 py-4 sm:py-8"><!-- Formulário de Agendamento -->
         <section id="form-section" class="section fade-in">
-            <div class="bg-white rounded-2xl shadow-xl p-8 glass-effect hover-scale">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-                    <i class="fas fa-calendar-plus text-custom-purple mr-3"></i>
-                    Novo Agendamento de Medição
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 glass-effect hover-scale">
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
+                    <i class="fas fa-calendar-plus text-custom-purple mr-2 sm:mr-3"></i>
+                    <span class="block sm:inline">Novo Agendamento de Medição</span>
                 </h2>
                 
-                <form id="agendamento-form" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Nome Cliente -->
-                        <div>
+                <form id="agendamento-form" class="space-y-6"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"><!-- Nome Cliente -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-user mr-2 text-custom-purple"></i>Nome do Cliente*
                             </label>
-                            <input type="text" id="nome-cliente" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="text" id="nome-cliente" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-
-                        <!-- Telefone -->
-                        <div>
+<!-- Telefone -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-phone mr-2 text-custom-purple"></i>Telefone*
                             </label>
-                            <input type="tel" id="telefone" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="tel" id="telefone" required="" placeholder="(11) 99999-9999" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-
-                        <!-- E-mail -->
-                        <div>
+<!-- E-mail -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-envelope mr-2 text-custom-purple"></i>E-mail*
                             </label>
-                            <input type="email" id="email" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="email" id="email" required="" placeholder="exemplo@email.com" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-
-                        <!-- Tipo de Imóvel -->
-                        <div>
+<!-- Tipo de Imóvel -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-building mr-2 text-custom-purple"></i>Tipo de Imóvel*
                             </label>
-                            <select id="tipo-imovel" required="" onchange="updateAmbientes()" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
+                            <select id="tipo-imovel" required="" onchange="updateAmbientes()" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
                                 <option value="">Selecione o tipo</option>
                                 <option value="casa">Casa</option>
                                 <option value="apartamento">Apartamento</option>
                             </select>
                         </div>
-
-                        <!-- Ambiente -->
-                        <div>
+<!-- Ambiente -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-home mr-2 text-custom-purple"></i>Ambiente*
                             </label>
-                            <select id="ambiente" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
+                            <select id="ambiente" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
                                 <option value="">Primeiro selecione o tipo de imóvel</option>
                             </select>
                         </div>
-
-                        <!-- Loja -->
-                        <div>
+<!-- Loja -->
+                        <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-store mr-2 text-custom-purple"></i>Loja*
                             </label>
-                            <select id="loja" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
+                            <select id="loja" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
                                 <option value="">Selecione a loja</option>
                                 <option value="Diana D1">Diana D1</option>
                                 <option value="Diana D2">Diana D2</option>
@@ -141,162 +156,149 @@
                                 <option value="Outros">Outros</option>
                             </select>
                         </div>
-
-                        <!-- Data -->
-                        <div>
+<!-- Data -->
+                        <div class="sm:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-calendar mr-2 text-custom-purple"></i>Data*
                             </label>
-                            <input type="date" id="data" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="date" id="data" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-
-                        <!-- Horário -->
-                        <div>
+<!-- Horário -->
+                        <div class="sm:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-clock mr-2 text-custom-purple"></i>Horário*
                             </label>
-                            <input type="time" id="horario" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="time" id="horario" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
                     </div>
-
-                    <!-- CEP e Endereço -->
+<!-- CEP e Endereço -->
                     <div class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="sm:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     <i class="fas fa-map-pin mr-2 text-custom-purple"></i>CEP*
                                 </label>
-                                <input type="text" id="cep" required="" placeholder="00000-000" onblur="buscarEndereco()" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                                <input type="text" id="cep" required="" placeholder="00000-000" onblur="buscarEndereco()" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                             </div>
-                            <div>
+                            <div class="sm:col-span-1 lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Número*</label>
-                                <input type="text" id="numero" required="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                                <input type="text" id="numero" required="" placeholder="123" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                             </div>
-                            <div>
+                            <div class="sm:col-span-2 lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-                                <input type="text" id="complemento" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                                <input type="text" id="complemento" placeholder="Apto 45, Bloco B" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                             </div>
                         </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
+                        <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">
+                            <div class="lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro*</label>
-                                <input type="text" id="logradouro" required="" readonly="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50"/>
+                                <input type="text" id="logradouro" required="" readonly="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg bg-gray-50"/>
                             </div>
-                            <div>
+                            <div class="lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Bairro*</label>
-                                <input type="text" id="bairro" required="" readonly="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50"/>
+                                <input type="text" id="bairro" required="" readonly="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg bg-gray-50"/>
                             </div>
-                            <div>
+                            <div class="lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Cidade*</label>
-                                <input type="text" id="cidade" required="" readonly="" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50"/>
+                                <input type="text" id="cidade" required="" readonly="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg bg-gray-50"/>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Observação -->
+<!-- Observação -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-sticky-note mr-2 text-custom-purple"></i>Observações
                         </label>
-                        <textarea id="observacao" rows="4" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all" placeholder="Informações adicionais sobre o agendamento..."></textarea>
+                        <textarea id="observacao" rows="3" sm:rows="4" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all resize-none" placeholder="Informações adicionais sobre o agendamento..."></textarea>
                     </div>
 
                     <!-- Status (hidden field, default: agendado) -->
                     <input type="hidden" id="status" value="agendado"/>
-
-                    <div class="flex justify-center space-x-4 pt-6">
-                        <button type="submit" class="px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+<div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-6">
+                        <button type="submit" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg text-sm sm:text-base">
                             <i class="fas fa-save mr-2"></i>Salvar Agendamento
                         </button>
-                        <button type="button" onclick="limparFormulario()" class="px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                        <button type="button" onclick="limparFormulario()" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transform hover:scale-105 transition-all duration-200 shadow-lg text-sm sm:text-base">
                             <i class="fas fa-eraser mr-2"></i>Limpar
                         </button>
                     </div>
                 </form>
             </div>
         </section>
-
-        <!-- Dashboard -->
+<!-- Dashboard -->
         <section id="dashboard-section" class="section hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow-lg hover-scale">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8"><div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-600">Total Agendamentos</p>
-                            <p class="text-3xl font-bold text-gray-900" id="total-agendamentos">0</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-medium text-gray-600 truncate">Total Agendamentos</p>
+                            <p class="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900" id="total-agendamentos">0</p>
                         </div>
-                        <div class="p-3 bg-blue-100 rounded-full">
-                            <i class="fas fa-calendar-alt text-blue-600 text-xl"></i>
+                        <div class="p-2 sm:p-3 bg-blue-100 rounded-full flex-shrink-0 ml-2">
+                            <i class="fas fa-calendar-alt text-blue-600 text-sm sm:text-lg lg:text-xl"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover-scale">
+                <div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-600">Agendados</p>
-                            <p class="text-3xl font-bold text-yellow-600" id="total-agendados">0</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-medium text-gray-600 truncate">Agendados</p>
+                            <p class="text-lg sm:text-2xl lg:text-3xl font-bold text-yellow-600" id="total-agendados">0</p>
                         </div>
-                        <div class="p-3 bg-yellow-100 rounded-full">
-                            <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                        <div class="p-2 sm:p-3 bg-yellow-100 rounded-full flex-shrink-0 ml-2">
+                            <i class="fas fa-clock text-yellow-600 text-sm sm:text-lg lg:text-xl"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover-scale">
+                <div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-600">Finalizados</p>
-                            <p class="text-3xl font-bold text-green-600" id="total-finalizados">0</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-medium text-gray-600 truncate">Finalizados</p>
+                            <p class="text-lg sm:text-2xl lg:text-3xl font-bold text-green-600" id="total-finalizados">0</p>
                         </div>
-                        <div class="p-3 bg-green-100 rounded-full">
-                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        <div class="p-2 sm:p-3 bg-green-100 rounded-full flex-shrink-0 ml-2">
+                            <i class="fas fa-check-circle text-green-600 text-sm sm:text-lg lg:text-xl"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-lg hover-scale">
+                <div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
                     <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-600">Cancelados</p>
-                            <p class="text-3xl font-bold text-red-600" id="total-cancelados">0</p>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs sm:text-sm font-medium text-gray-600 truncate">Cancelados</p>
+                            <p class="text-lg sm:text-2xl lg:text-3xl font-bold text-red-600" id="total-cancelados">0</p>
                         </div>
-                        <div class="p-3 bg-red-100 rounded-full">
-                            <i class="fas fa-times-circle text-red-600 text-xl"></i>
+                        <div class="p-2 sm:p-3 bg-red-100 rounded-full flex-shrink-0 ml-2">
+                            <i class="fas fa-times-circle text-red-600 text-sm sm:text-lg lg:text-xl"></i>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Gráfico -->
-            <div class="bg-white p-6 rounded-xl shadow-lg">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">Agendamentos por Status</h3>
-                <canvas id="statusChart" width="400" height="200"></canvas>
+<!-- Gráfico -->
+            <div class="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">Agendamentos por Status</h3>
+                <div class="relative h-64 sm:h-80">
+                    <canvas id="statusChart" class="w-full h-full"></canvas>
+                </div>
             </div>
         </section>
-
-        <!-- Lista de Agendamentos -->
+<!-- Lista de Agendamentos -->
         <section id="list-section" class="section hidden">
-            <div class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                    <i class="fas fa-list mr-3 text-custom-purple"></i>
-                    Gerenciar Agendamentos
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8">
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
+                    <i class="fas fa-list mr-2 sm:mr-3 text-custom-purple"></i>
+                    <span class="block sm:inline">Gerenciar Agendamentos</span>
                 </h2>
-
-                <!-- Filtros -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Buscar por nome:</label>
-                        <input type="text" id="filtro-nome" placeholder="Digite o nome do cliente" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+<!-- Filtros -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-50 rounded-lg"><div class="sm:col-span-2 lg:col-span-1">
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Buscar por nome:</label>
+                        <input type="text" id="filtro-nome" placeholder="Nome do cliente" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Buscar por endereço:</label>
-                        <input type="text" id="filtro-endereco" placeholder="Digite o endereço" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    <div class="sm:col-span-2 lg:col-span-1">
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Buscar por endereço:</label>
+                        <input type="text" id="filtro-endereco" placeholder="Endereço" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status:</label>
-                        <select id="filtro-status" onchange="filtrarAgendamentos()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
+                    <div class="sm:col-span-1 lg:col-span-1">
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status:</label>
+                        <select id="filtro-status" onchange="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
                             <option value="">Todos os status</option>
                             <option value="agendado">Agendado</option>
                             <option value="finalizado">Finalizado</option>
@@ -304,18 +306,17 @@
                         </select>
                     </div>
                 </div>
-
-                <!-- Tabela responsiva -->
-                <div class="overflow-x-auto">
-                    <table class="w-full table-auto">
+<!-- Tabela responsiva -->
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full table-auto min-w-full">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Cliente</th>
-                                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Data/Hora</th>
-                                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Endereço</th>
-                                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Loja</th>
-                                <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Status</th>
-                                <th class="px-4 py-3 text-center text-sm font-semibold text-gray-600">Ações</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600">Cliente</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 hidden sm:table-cell">Data/Hora</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 hidden md:table-cell">Endereço</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 hidden lg:table-cell">Loja</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600">Status</th>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-center text-xs sm:text-sm font-semibold text-gray-600">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="agendamentos-list" class="divide-y divide-gray-200">
@@ -323,53 +324,46 @@
                         </tbody>
                     </table>
                 </div>
-
-                <!-- Mensagem quando não há agendamentos -->
-                <div id="no-agendamentos" class="text-center py-8 hidden">
-                    <i class="fas fa-calendar-times text-4xl text-gray-400 mb-4"></i>
-                    <p class="text-gray-500">Nenhum agendamento encontrado</p>
+<!-- Mensagem quando não há agendamentos -->
+                <div id="no-agendamentos" class="text-center py-6 sm:py-8 hidden">
+                    <i class="fas fa-calendar-times text-2xl sm:text-4xl text-gray-400 mb-3 sm:mb-4"></i>
+                    <p class="text-sm sm:text-base text-gray-500">Nenhum agendamento encontrado</p>
                 </div>
             </div>
         </section>
     </div>
-
-    <!-- Modal para edição -->
+<!-- Modal para edição -->
     <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-xl p-6 w-full max-w-md">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">Editar Agendamento</h3>
+        <div class="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4"><h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">Editar Agendamento</h3>
             <form id="edit-form">
                 <input type="hidden" id="edit-id"/>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Cliente</label>
-                        <input type="text" id="edit-nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg"/>
+                <div class="space-y-4"><div>
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Nome do Cliente</label>
+                        <input type="text" id="edit-nome" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"/>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <select id="edit-status" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select id="edit-status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
                             <option value="agendado">Agendado</option>
                             <option value="finalizado">Finalizado</option>
                             <option value="cancelado">Cancelado</option>
                         </select>
                     </div>
-                </div>
-                <div class="flex justify-end space-x-3 mt-6">
-                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                </div><div class="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-6">
+                    <button type="button" onclick="closeEditModal()" class="w-full sm:w-auto px-4 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600 order-2 sm:order-1">
                         Cancelar
                     </button>
-                    <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                    <button type="submit" class="w-full sm:w-auto px-4 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 order-1 sm:order-2">
                         Salvar
                     </button>
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Toast de notificação -->
-    <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-        <div class="flex items-center">
-            <i class="fas fa-check-circle mr-2"></i>
-            <span id="toast-message"></span>
+<!-- Toast de notificação -->
+    <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50 max-w-sm mx-auto sm:mx-0"><div class="flex items-center justify-center sm:justify-start">
+            <i class="fas fa-check-circle mr-2 flex-shrink-0"></i>
+            <span id="toast-message" class="text-sm sm:text-base text-center sm:text-left"></span>
         </div>
     </div>
 
@@ -523,8 +517,7 @@
             document.getElementById('agendamento-form').reset();
             document.getElementById('ambiente').innerHTML = '<option value="">Primeiro selecione o tipo de imóvel</option>';
         }
-
-        // Renderizar lista de agendamentos
+// Renderizar lista de agendamentos
         function renderAgendamentos() {
             const tbody = document.getElementById('agendamentos-list');
             const noAgendamentos = document.getElementById('no-agendamentos');
@@ -554,41 +547,60 @@
             
             tbody.innerHTML = filteredAgendamentos.map(agendamento => `
                 <tr class="hover:bg-gray-50">
-                    <td class="px-4 py-3">
+                    <td class="px-2 sm:px-4 py-2 sm:py-3">
                         <div>
-                            <div class="font-medium text-gray-900">${agendamento.nomeCliente}</div>
-                            <div class="text-sm text-gray-500">${agendamento.telefone}</div>
+                            <div class="font-medium text-gray-900 text-sm">${agendamento.nomeCliente}</div>
+                            <div class="text-xs text-gray-500 sm:hidden">${formatDate(agendamento.data)} ${agendamento.horario}</div>
+                            <div class="text-xs text-gray-500">${agendamento.telefone}</div>
                         </div>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
                         <div class="text-sm text-gray-900">${formatDate(agendamento.data)}</div>
-                        <div class="text-sm text-gray-500">${agendamento.horario}</div>
+                        <div class="text-xs text-gray-500">${agendamento.horario}</div>
                     </td>
-                    <td class="px-4 py-3">
-                        <div class="text-sm text-gray-900">${agendamento.logradouro}, ${agendamento.numero}</div>
-                        <div class="text-sm text-gray-500">${agendamento.bairro} - ${agendamento.cidade}</div>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 hidden md:table-cell">
+                        <div class="text-xs text-gray-900">${agendamento.logradouro}, ${agendamento.numero}</div>
+                        <div class="text-xs text-gray-500">${agendamento.bairro}</div>
                     </td>
-                    <td class="px-4 py-3">
-                        <div class="text-sm text-gray-900">${agendamento.loja}</div>
-                        <div class="text-sm text-gray-500">${agendamento.ambiente}</div>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 hidden lg:table-cell">
+                        <div class="text-xs text-gray-900">${agendamento.loja}</div>
+                        <div class="text-xs text-gray-500">${agendamento.ambiente}</div>
                     </td>
-                    <td class="px-4 py-3">
+                    <td class="px-2 sm:px-4 py-2 sm:py-3">
                         <span class="px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(agendamento.status)}">
                             ${getStatusText(agendamento.status)}
                         </span>
                     </td>
-                    <td class="px-4 py-3 text-center">
-                        <button onclick="editAgendamento(${agendamento.id})" 
-                                class="text-blue-600 hover:text-blue-800 mr-2">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteAgendamento(${agendamento.id})" 
-                                class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <td class="px-2 sm:px-4 py-2 sm:py-3 text-center">
+                        <div class="flex justify-center space-x-1 sm:space-x-2">
+                            <button onclick="editAgendamento(${agendamento.id})" 
+                                    class="text-blue-600 hover:text-blue-800 p-1">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                            <button onclick="deleteAgendamento(${agendamento.id})" 
+                                    class="text-red-600 hover:text-red-800 p-1">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `).join('');
+        }
+
+        // Função para toggle do menu mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         }
 
         // Filtrar agendamentos
