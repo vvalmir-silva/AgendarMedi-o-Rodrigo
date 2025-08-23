@@ -5,6 +5,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AgendarMedição - Sistema de Agendamentos"/>
+    <meta property="og:description" content="Sistema profissional para agendamento de medições com dashboard e CRUD completo"/>
+    <meta property="og:url" content="https://www.onspace.ai"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="OnSpace.AI"/>
+    <meta property="og:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/pre-site/9b1u0c.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="AgendarMedição - Sistema de Agendamentos"/>
+    <meta name="twitter:description" content="Sistema profissional para agendamento de medições com dashboard e CRUD completo"/>
+    <meta name="twitter:image" content="https://cdn-ai.onspace.ai/onspace/project/screenshot/pre-site/9b1u0c.jpg"/>
+    <meta name="twitter:url" content="https://www.onspace.ai"/>
+    
     <style>
         :root {
             --purple-primary: #8B5CF6;
@@ -38,11 +56,23 @@
         .hover-scale:hover {
             transform: scale(1.02);
         }
+        
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        
+        .pagination-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-btn:hover {
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-purple-50 min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg border-b-4 border-purple-500">
+    <nav class="bg-white shadow-lg border-b-4 border-purple-500 sticky top-0 z-40">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
@@ -53,14 +83,14 @@
                 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex space-x-2 lg:space-x-4">
-                    <button onclick="showSection(form)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-sm lg:text-base">
+                    <button onclick="showSection(&#39;form&#39;)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-sm lg:text-base">
                         <i class="fas fa-plus mr-1 lg:mr-2"></i>
                         <span class="hidden lg:inline">Novo </span>Agendamento
                     </button>
-                    <button onclick="showSection(dashboard)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-sm lg:text-base">
+                    <button onclick="showSection(&#39;dashboard&#39;)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-sm lg:text-base">
                         <i class="fas fa-chart-dashboard mr-1 lg:mr-2"></i>Dashboard
                     </button>
-                    <button onclick="showSection(list)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-sm lg:text-base">
+                    <button onclick="showSection(&#39;list&#39;)" class="nav-btn px-3 lg:px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-sm lg:text-base">
                         <i class="fas fa-list mr-1 lg:mr-2"></i>Agendamentos
                     </button>
                 </div>
@@ -74,20 +104,22 @@
             <!-- Mobile Navigation Menu -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 <div class="flex flex-col space-y-2">
-                    <button onclick="showSection(form); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-left">
+                    <button onclick="showSection(&#39;form&#39;); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-purple-500 text-white hover:bg-purple-600 transition-colors text-left">
                         <i class="fas fa-plus mr-2"></i>Novo Agendamento
                     </button>
-                    <button onclick="showSection(dashboard); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-left">
+                    <button onclick="showSection(&#39;dashboard&#39;); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition-colors text-left">
                         <i class="fas fa-chart-dashboard mr-2"></i>Dashboard
                     </button>
-                    <button onclick="showSection(list); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-left">
+                    <button onclick="showSection(&#39;list&#39;); toggleMobileMenu()" class="nav-btn px-4 py-3 rounded-lg bg-black text-white hover:bg-gray-800 transition-colors text-left">
                         <i class="fas fa-list mr-2"></i>Agendamentos
                     </button>
                 </div>
             </div>
         </div>
     </nav>
-<div class="container mx-auto px-2 sm:px-4 py-4 sm:py-8"><!-- Formulário de Agendamento -->
+
+    <div class="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+        <!-- Formulário de Agendamento -->
         <section id="form-section" class="section fade-in">
             <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 glass-effect hover-scale">
                 <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-6 sm:mb-8 text-center">
@@ -95,28 +127,33 @@
                     <span class="block sm:inline">Novo Agendamento de Medição</span>
                 </h2>
                 
-                <form id="agendamento-form" class="space-y-6"><div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6"><!-- Nome Cliente -->
+                <form id="agendamento-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                        <!-- Nome Cliente -->
                         <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-user mr-2 text-custom-purple"></i>Nome do Cliente*
                             </label>
                             <input type="text" id="nome-cliente" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-<!-- Telefone -->
+
+                        <!-- Telefone -->
                         <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-phone mr-2 text-custom-purple"></i>Telefone*
                             </label>
                             <input type="tel" id="telefone" required="" placeholder="(11) 99999-9999" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-<!-- E-mail -->
+
+                        <!-- E-mail -->
                         <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-envelope mr-2 text-custom-purple"></i>E-mail*
                             </label>
                             <input type="email" id="email" required="" placeholder="exemplo@email.com" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-<!-- Tipo de Imóvel -->
+
+                        <!-- Tipo de Imóvel -->
                         <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-building mr-2 text-custom-purple"></i>Tipo de Imóvel*
@@ -127,16 +164,24 @@
                                 <option value="apartamento">Apartamento</option>
                             </select>
                         </div>
-<!-- Ambiente -->
-                        <div class="sm:col-span-2 md:col-span-1">
+
+                        <!-- Ambiente -->
+                        <div class="sm:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-home mr-2 text-custom-purple"></i>Ambiente*
+                                <i class="fas fa-home mr-2 text-custom-purple"></i>Ambientes* (Múltipla Escolha)
                             </label>
-                            <select id="ambiente" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all">
-                                <option value="">Primeiro selecione o tipo de imóvel</option>
-                            </select>
+                            <div class="relative">
+                                <div class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus-within:border-purple-500 focus-within:ring focus-within:ring-purple-200 transition-all bg-white min-h-[44px] cursor-pointer" id="ambiente-container" onclick="toggleAmbienteDropdown()">
+                                    <div id="ambiente-selected" class="text-gray-500">Primeiro selecione o tipo de imóvel</div>
+                                </div>
+                                <div id="ambiente-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                    <!-- Options será preenchido via JavaScript -->
+                                </div>
+                            </div>
+                            <input type="hidden" id="ambiente" name="ambiente"/>
                         </div>
-<!-- Loja -->
+
+                        <!-- Loja -->
                         <div class="sm:col-span-2 md:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-store mr-2 text-custom-purple"></i>Loja*
@@ -156,22 +201,33 @@
                                 <option value="Outros">Outros</option>
                             </select>
                         </div>
-<!-- Data -->
+
+                                                <!-- Data -->
                         <div class="sm:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-calendar mr-2 text-custom-purple"></i>Data*
                             </label>
-                            <input type="date" id="data" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="date" id="data" required="" onchange="updateAgendamentoDateTime()" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
                         </div>
-<!-- Horário -->
+
+                        <!-- Horário -->
                         <div class="sm:col-span-1">
                             <label class="block text-sm font-medium text-gray-700 mb-2">
                                 <i class="fas fa-clock mr-2 text-custom-purple"></i>Horário*
                             </label>
-                            <input type="time" id="horario" required="" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                            <input type="time" id="horario" required="" onchange="updateAgendamentoDateTime()" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all"/>
+                        </div>
+
+                                                <!-- Horário do Agendamento (Readonly) -->
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-calendar-check mr-2 text-custom-purple"></i>Horário do Agendamento (Gerado Automaticamente)
+                            </label>
+                            <input type="text" id="horario-agendamento" readonly="" disabled="" placeholder="Selecione data e horário acima" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"/>
                         </div>
                     </div>
-<!-- CEP e Endereço -->
+
+                    <!-- CEP e Endereço -->
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div class="sm:col-span-1">
@@ -204,17 +260,19 @@
                             </div>
                         </div>
                     </div>
-<!-- Observação -->
+
+                    <!-- Observação -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-sticky-note mr-2 text-custom-purple"></i>Observações
                         </label>
-                        <textarea id="observacao" rows="3" sm:rows="4" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all resize-none" placeholder="Informações adicionais sobre o agendamento..."></textarea>
+                        <textarea id="observacao" rows="3" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 transition-all resize-none" placeholder="Informações adicionais sobre o agendamento..."></textarea>
                     </div>
 
                     <!-- Status (hidden field, default: agendado) -->
                     <input type="hidden" id="status" value="agendado"/>
-<div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-6">
+
+                    <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-6">
                         <button type="submit" class="w-full sm:w-auto px-6 sm:px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg text-sm sm:text-base">
                             <i class="fas fa-save mr-2"></i>Salvar Agendamento
                         </button>
@@ -225,9 +283,11 @@
                 </form>
             </div>
         </section>
-<!-- Dashboard -->
+
+        <!-- Dashboard -->
         <section id="dashboard-section" class="section hidden">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8"><div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white p-3 sm:p-4 lg:p-6 rounded-lg sm:rounded-xl shadow-lg hover-scale">
                     <div class="flex items-center justify-between">
                         <div class="min-w-0 flex-1">
                             <p class="text-xs sm:text-sm font-medium text-gray-600 truncate">Total Agendamentos</p>
@@ -272,7 +332,8 @@
                     </div>
                 </div>
             </div>
-<!-- Gráfico -->
+
+            <!-- Gráfico -->
             <div class="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-lg">
                 <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">Agendamentos por Status</h3>
                 <div class="relative h-64 sm:h-80">
@@ -280,23 +341,44 @@
                 </div>
             </div>
         </section>
-<!-- Lista de Agendamentos -->
+
+        <!-- Lista de Agendamentos -->
         <section id="list-section" class="section hidden">
             <div class="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8">
-                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
-                    <i class="fas fa-list mr-2 sm:mr-3 text-custom-purple"></i>
-                    <span class="block sm:inline">Gerenciar Agendamentos</span>
-                </h2>
-<!-- Filtros -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-50 rounded-lg"><div class="sm:col-span-2 lg:col-span-1">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-4">
+                    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">
+                        <i class="fas fa-list mr-2 sm:mr-3 text-custom-purple"></i>
+                        <span class="block sm:inline">Gerenciar Agendamentos</span>
+                    </h2>
+                    
+                    <!-- Ações em lote -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openCreateModal()" class="px-3 sm:px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-xs sm:text-sm font-medium transition-all">
+                            <i class="fas fa-plus mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Novo </span>Agendamento
+                        </button>
+                        <button onclick="deleteSelected()" class="px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs sm:text-sm font-medium transition-all">
+                            <i class="fas fa-trash mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Excluir </span>Selecionados
+                        </button>
+                        <button onclick="exportData()" class="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-xs sm:text-sm font-medium transition-all">
+                            <i class="fas fa-download mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Exportar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+                    <div class="sm:col-span-1">
                         <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Buscar por nome:</label>
                         <input type="text" id="filtro-nome" placeholder="Nome do cliente" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
                     </div>
-                    <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="sm:col-span-1">
                         <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Buscar por endereço:</label>
                         <input type="text" id="filtro-endereco" placeholder="Endereço" onkeyup="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
                     </div>
-                    <div class="sm:col-span-1 lg:col-span-1">
+                    <div class="sm:col-span-1">
                         <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status:</label>
                         <select id="filtro-status" onchange="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
                             <option value="">Todos os status</option>
@@ -305,12 +387,46 @@
                             <option value="cancelado">Cancelado</option>
                         </select>
                     </div>
+                    <div class="sm:col-span-1">
+                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Loja:</label>
+                        <select id="filtro-loja" onchange="filtrarAgendamentos()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
+                            <option value="">Todas as lojas</option>
+                            <option value="Diana D1">Diana D1</option>
+                            <option value="Diana D2">Diana D2</option>
+                            <option value="Diana D3">Diana D3</option>
+                            <option value="Diana D4">Diana D4</option>
+                            <option value="Marquise Planejados">Marquise Planejados</option>
+                            <option value="By Estilo">By Estilo</option>
+                            <option value="Anfelle">Anfelle</option>
+                            <option value="Planejados">Planejados</option>
+                            <option value="Rassul Planejados">Rassul Planejados</option>
+                            <option value="Miralli Móveis">Miralli Móveis</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
                 </div>
-<!-- Tabela responsiva -->
+
+                <!-- Controles de seleção -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="select-all" onchange="toggleSelectAll()" class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"/>
+                        <label for="select-all" class="text-sm font-medium text-gray-700">
+                            Selecionar todos (<span id="selected-count">0</span>)
+                        </label>
+                    </div>
+                    <div class="text-xs sm:text-sm text-gray-600">
+                        Mostrando <span id="showing-count">0</span> de <span id="total-count">0</span> agendamentos
+                    </div>
+                </div>
+
+                <!-- Tabela responsiva -->
                 <div class="overflow-x-auto -mx-4 sm:mx-0">
                     <table class="w-full table-auto min-w-full">
                         <thead class="bg-gray-50">
                             <tr>
+                                <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 w-8">
+                                    <input type="checkbox" id="header-select-all" onchange="toggleSelectAll()" class="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"/>
+                                </th>
                                 <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600">Cliente</th>
                                 <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 hidden sm:table-cell">Data/Hora</th>
                                 <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-600 hidden md:table-cell">Endereço</th>
@@ -324,7 +440,23 @@
                         </tbody>
                     </table>
                 </div>
-<!-- Mensagem quando não há agendamentos -->
+
+                <!-- Paginação -->
+                <div class="flex flex-col sm:flex-row justify-between items-center mt-6 gap-4">
+                    <div class="text-xs sm:text-sm text-gray-600">
+                        Página <span id="current-page">1</span> de <span id="total-pages">1</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="prev-btn" onclick="previousPage()" class="pagination-btn px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-chevron-left mr-1"></i>Anterior
+                        </button>
+                        <button id="next-btn" onclick="nextPage()" class="pagination-btn px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            Próxima<i class="fas fa-chevron-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mensagem quando não há agendamentos -->
                 <div id="no-agendamentos" class="text-center py-6 sm:py-8 hidden">
                     <i class="fas fa-calendar-times text-2xl sm:text-4xl text-gray-400 mb-3 sm:mb-4"></i>
                     <p class="text-sm sm:text-base text-gray-500">Nenhum agendamento encontrado</p>
@@ -332,36 +464,170 @@
             </div>
         </section>
     </div>
-<!-- Modal para edição -->
-    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 w-full max-w-sm sm:max-w-md mx-4"><h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4">Editar Agendamento</h3>
-            <form id="edit-form">
-                <input type="hidden" id="edit-id"/>
-                <div class="space-y-4"><div>
-                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Nome do Cliente</label>
-                        <input type="text" id="edit-nome" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"/>
+
+    <!-- Modal para criar/editar agendamento -->
+    <div id="create-edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 w-full max-w-2xl mx-4 max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800" id="modal-title">Criar Novo Agendamento</h3>
+                <button onclick="closeCreateEditModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="create-edit-form" class="space-y-4">
+                <input type="hidden" id="modal-id"/>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nome do Cliente*</label>
+                        <input type="text" id="modal-nome" required="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
                     </div>
                     <div>
-                        <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <select id="edit-status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-                            <option value="agendado">Agendado</option>
-                            <option value="finalizado">Finalizado</option>
-                            <option value="cancelado">Cancelado</option>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Telefone*</label>
+                        <input type="tel" id="modal-telefone" required="" placeholder="(11) 99999-9999" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">E-mail*</label>
+                        <input type="email" id="modal-email" required="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipo de Imóvel*</label>
+                        <select id="modal-tipo-imovel" required="" onchange="updateModalAmbientes()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
+                            <option value="">Selecione o tipo</option>
+                            <option value="casa">Casa</option>
+                            <option value="apartamento">Apartamento</option>
                         </select>
                     </div>
-                </div><div class="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-6">
-                    <button type="button" onclick="closeEditModal()" class="w-full sm:w-auto px-4 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600 order-2 sm:order-1">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Ambientes* (Múltipla Escolha)</label>
+                        <div class="relative">
+                            <div class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus-within:border-purple-500 focus-within:ring focus-within:ring-purple-200 transition-all bg-white min-h-[40px] cursor-pointer" id="modal-ambiente-container" onclick="toggleModalAmbienteDropdown()">
+                                <div id="modal-ambiente-selected" class="text-gray-500">Selecione os ambientes</div>
+                            </div>
+                            <div id="modal-ambiente-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                <!-- Options será preenchido via JavaScript -->
+                            </div>
+                        </div>
+                        <input type="hidden" id="modal-ambiente" name="modal-ambiente"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Loja*</label>
+                        <select id="modal-loja" required="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
+                            <option value="">Selecione a loja</option>
+                            <option value="Diana D1">Diana D1</option>
+                            <option value="Diana D2">Diana D2</option>
+                            <option value="Diana D3">Diana D3</option>
+                            <option value="Diana D4">Diana D4</option>
+                            <option value="Marquise Planejados">Marquise Planejados</option>
+                            <option value="By Estilo">By Estilo</option>
+                            <option value="Anfelle">Anfelle</option>
+                            <option value="Planejados">Planejados</option>
+                            <option value="Rassul Planejados">Rassul Planejados</option>
+                            <option value="Miralli Móveis">Miralli Móveis</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Data*</label>
+                        <input type="date" id="modal-data" required="" onchange="updateModalAgendamentoDateTime()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Horário*</label>
+                        <input type="time" id="modal-horario" required="" onchange="updateModalAgendamentoDateTime()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <!-- Horário do Agendamento (Readonly) -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Horário do Agendamento (Não Editável)</label>
+                        <input type="text" id="modal-horario-agendamento" readonly="" disabled="" placeholder="Selecione data e horário acima" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"/>
+                    </div>
+                </div>
+
+                <!-- Endereço -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">CEP*</label>
+                        <input type="text" id="modal-cep" required="" placeholder="00000-000" onblur="buscarEnderecoModal()" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Número*</label>
+                        <input type="text" id="modal-numero" required="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
+                        <input type="text" id="modal-complemento" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"/>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Logradouro*</label>
+                        <input type="text" id="modal-logradouro" required="" readonly="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bairro*</label>
+                        <input type="text" id="modal-bairro" required="" readonly="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50"/>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Cidade*</label>
+                        <input type="text" id="modal-cidade" required="" readonly="" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50"/>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <select id="modal-status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200">
+                        <option value="agendado">Agendado</option>
+                        <option value="finalizado">Finalizado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Observações</label>
+                    <textarea id="modal-observacao" rows="3" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200 resize-none" placeholder="Informações adicionais..."></textarea>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeCreateEditModal()" class="w-full sm:w-auto px-4 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600 order-2 sm:order-1">
                         Cancelar
                     </button>
                     <button type="submit" class="w-full sm:w-auto px-4 py-2 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 order-1 sm:order-2">
-                        Salvar
+                        <i class="fas fa-save mr-2"></i>Salvar
                     </button>
                 </div>
             </form>
         </div>
     </div>
-<!-- Toast de notificação -->
-    <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50 max-w-sm mx-auto sm:mx-0"><div class="flex items-center justify-center sm:justify-start">
+
+    <!-- Modal para visualizar detalhes -->
+    <div id="view-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50 modal">
+        <div class="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 w-full max-w-2xl mx-4 max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800">Detalhes do Agendamento</h3>
+                <button onclick="closeViewModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="view-content" class="space-y-4">
+                <!-- Conteúdo será preenchido via JavaScript -->
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <button onclick="closeViewModal()" class="px-4 py-2 text-sm bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificação -->
+    <div id="toast" class="fixed top-4 right-4 left-4 sm:left-auto bg-green-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50 max-w-sm mx-auto sm:mx-0">
+        <div class="flex items-center justify-center sm:justify-start">
             <i class="fas fa-check-circle mr-2 flex-shrink-0"></i>
             <span id="toast-message" class="text-sm sm:text-base text-center sm:text-left"></span>
         </div>
@@ -370,8 +636,14 @@
     <script>
         // Dados globais
         let agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+        let filteredAgendamentos = [];
+        let selectedIds = new Set();
+        let currentPage = 1;
+        let itemsPerPage = 10;
         let editingId = null;
         let statusChart = null;
+        let selectedAmbientes = [];
+        let modalSelectedAmbientes = [];
 
         // Ambientes por tipo de imóvel
         const ambientesPorTipo = {
@@ -413,16 +685,53 @@
         document.addEventListener('DOMContentLoaded', function() {
             showSection('form');
             updateDashboard();
-            renderAgendamentos();
+            filtrarAgendamentos();
             
             // Define data mínima como hoje
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('data').setAttribute('min', today);
+            document.getElementById('modal-data').setAttribute('min', today);
 
             // Event listeners
             document.getElementById('agendamento-form').addEventListener('submit', salvarAgendamento);
-            document.getElementById('edit-form').addEventListener('submit', updateAgendamento);
+            document.getElementById('create-edit-form').addEventListener('submit', saveCreateEditForm);
+
+            // Máscaras nos formulários
+            setupMasks();
         });
+
+        // Configurar máscaras
+        function setupMasks() {
+            // Máscara para telefone - formulário principal
+            document.getElementById('telefone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+
+            // Máscara para telefone - modal
+            document.getElementById('modal-telefone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{2})(\d)/, '($1) $2');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+
+            // Máscara para CEP - formulário principal
+            document.getElementById('cep').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+
+            // Máscara para CEP - modal
+            document.getElementById('modal-cep').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                value = value.replace(/(\d{5})(\d)/, '$1-$2');
+                e.target.value = value;
+            });
+        }
 
         // Navegação entre seções
         function showSection(section) {
@@ -433,24 +742,193 @@
                 updateDashboard();
                 renderChart();
             } else if (section === 'list') {
-                renderAgendamentos();
+                filtrarAgendamentos();
+            }
+        }
+
+        // Toggle menu mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         }
 
         // Atualizar ambientes baseado no tipo de imóvel
         function updateAmbientes() {
             const tipoImovel = document.getElementById('tipo-imovel').value;
-            const ambienteSelect = document.getElementById('ambiente');
+            const dropdown = document.getElementById('ambiente-dropdown');
+            const selected = document.getElementById('ambiente-selected');
             
-            ambienteSelect.innerHTML = '<option value="">Selecione o ambiente</option>';
+            selectedAmbientes = [];
+            dropdown.innerHTML = '';
+            selected.textContent = tipoImovel ? 'Selecione os ambientes' : 'Primeiro selecione o tipo de imóvel';
+            document.getElementById('ambiente').value = '';
             
             if (tipoImovel && ambientesPorTipo[tipoImovel]) {
                 ambientesPorTipo[tipoImovel].forEach(ambiente => {
-                    const option = document.createElement('option');
-                    option.value = ambiente;
-                    option.textContent = ambiente;
-                    ambienteSelect.appendChild(option);
+                    const option = document.createElement('div');
+                    option.className = 'px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
+                    option.innerHTML = `
+                        <input type="checkbox" class="mr-2" id="amb-${ambiente}" onchange="toggleAmbiente('${ambiente}')">
+                        <label for="amb-${ambiente}" class="cursor-pointer flex-1">${ambiente}</label>
+                    `;
+                    dropdown.appendChild(option);
                 });
+            }
+        }
+
+        // Toggle dropdown de ambientes
+        function toggleAmbienteDropdown() {
+            const dropdown = document.getElementById('ambiente-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Toggle ambiente selecionado
+        function toggleAmbiente(ambiente) {
+            const index = selectedAmbientes.indexOf(ambiente);
+            if (index > -1) {
+                selectedAmbientes.splice(index, 1);
+            } else {
+                selectedAmbientes.push(ambiente);
+            }
+            updateAmbienteDisplay();
+        }
+
+        // Atualizar display dos ambientes selecionados
+        function updateAmbienteDisplay() {
+            const selected = document.getElementById('ambiente-selected');
+            const hiddenInput = document.getElementById('ambiente');
+            
+            if (selectedAmbientes.length === 0) {
+                selected.textContent = 'Selecione os ambientes';
+                selected.className = 'text-gray-500';
+                hiddenInput.value = '';
+            } else {
+                selected.textContent = selectedAmbientes.join(', ');
+                selected.className = 'text-gray-900';
+                hiddenInput.value = selectedAmbientes.join(', ');
+            }
+        }
+
+        // Atualizar horário do agendamento
+        function updateAgendamentoDateTime() {
+            const data = document.getElementById('data').value;
+            const horario = document.getElementById('horario').value;
+            const horarioAgendamento = document.getElementById('horario-agendamento');
+            
+            if (data && horario) {
+                // Criar data no fuso horário de Brasília
+                const dataBrasilia = new Date(data + 'T' + horario + ':00');
+                const options = {
+                    timeZone: 'America/Sao_Paulo',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                };
+                
+                const dataFormatadaBrasilia = dataBrasilia.toLocaleString('pt-BR', options);
+                const [dataStr, horaStr] = dataFormatadaBrasilia.split(' ');
+                
+                horarioAgendamento.value = `${dataStr} às ${horaStr}`;
+            } else {
+                horarioAgendamento.value = '';
+            }
+        }
+
+        // Atualizar ambientes no modal
+        function updateModalAmbientes() {
+            const tipoImovel = document.getElementById('modal-tipo-imovel').value;
+            const dropdown = document.getElementById('modal-ambiente-dropdown');
+            const selected = document.getElementById('modal-ambiente-selected');
+            
+            modalSelectedAmbientes = [];
+            dropdown.innerHTML = '';
+            selected.textContent = tipoImovel ? 'Selecione os ambientes' : 'Primeiro selecione o tipo de imóvel';
+            document.getElementById('modal-ambiente').value = '';
+            
+            if (tipoImovel && ambientesPorTipo[tipoImovel]) {
+                ambientesPorTipo[tipoImovel].forEach(ambiente => {
+                    const option = document.createElement('div');
+                    option.className = 'px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center';
+                    option.innerHTML = `
+                        <input type="checkbox" class="mr-2" id="modal-amb-${ambiente}" onchange="toggleModalAmbiente('${ambiente}')">
+                        <label for="modal-amb-${ambiente}" class="cursor-pointer flex-1">${ambiente}</label>
+                    `;
+                    dropdown.appendChild(option);
+                });
+            }
+        }
+
+        // Toggle dropdown de ambientes do modal
+        function toggleModalAmbienteDropdown() {
+            const dropdown = document.getElementById('modal-ambiente-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Toggle ambiente selecionado no modal
+        function toggleModalAmbiente(ambiente) {
+            const index = modalSelectedAmbientes.indexOf(ambiente);
+            if (index > -1) {
+                modalSelectedAmbientes.splice(index, 1);
+            } else {
+                modalSelectedAmbientes.push(ambiente);
+            }
+            updateModalAmbienteDisplay();
+        }
+
+        // Atualizar display dos ambientes selecionados no modal
+        function updateModalAmbienteDisplay() {
+            const selected = document.getElementById('modal-ambiente-selected');
+            const hiddenInput = document.getElementById('modal-ambiente');
+            
+            if (modalSelectedAmbientes.length === 0) {
+                selected.textContent = 'Selecione os ambientes';
+                selected.className = 'text-gray-500';
+                hiddenInput.value = '';
+            } else {
+                selected.textContent = modalSelectedAmbientes.join(', ');
+                selected.className = 'text-gray-900';
+                hiddenInput.value = modalSelectedAmbientes.join(', ');
+            }
+        }
+
+        // Atualizar horário do agendamento no modal
+        function updateModalAgendamentoDateTime() {
+            const data = document.getElementById('modal-data').value;
+            const horario = document.getElementById('modal-horario').value;
+            const horarioAgendamento = document.getElementById('modal-horario-agendamento');
+            
+            if (data && horario) {
+                // Criar data no fuso horário de Brasília
+                const dataBrasilia = new Date(data + 'T' + horario + ':00');
+                const options = {
+                    timeZone: 'America/Sao_Paulo',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                };
+                
+                const dataFormatadaBrasilia = dataBrasilia.toLocaleString('pt-BR', options);
+                const [dataStr, horaStr] = dataFormatadaBrasilia.split(' ');
+                
+                horarioAgendamento.value = `${dataStr} às ${horaStr}`;
+            } else {
+                horarioAgendamento.value = '';
             }
         }
 
@@ -478,11 +956,39 @@
             }
         }
 
+        // Buscar endereço por CEP no modal
+        async function buscarEnderecoModal() {
+            const cep = document.getElementById('modal-cep').value.replace(/\D/g, '');
+            
+            if (cep.length !== 8) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                
+                if (!data.erro) {
+                    document.getElementById('modal-logradouro').value = data.logradouro;
+                    document.getElementById('modal-bairro').value = data.bairro;
+                    document.getElementById('modal-cidade').value = `${data.localidade} - ${data.uf}`;
+                } else {
+                    showToast('CEP não encontrado', 'error');
+                }
+            } catch (error) {
+                showToast('Erro ao buscar CEP', 'error');
+            }
+        }
+
         // Salvar agendamento
         function salvarAgendamento(e) {
             e.preventDefault();
             
-            const formData = new FormData(e.target);
+            const data = document.getElementById('data').value;
+            const horario = document.getElementById('horario').value;
+            const dataFormatada = new Date(data + 'T00:00:00').toLocaleDateString('pt-BR');
+            const horarioAgendamento = `${dataFormatada} às ${horario}`;
+            
             const agendamento = {
                 id: Date.now(),
                 nomeCliente: document.getElementById('nome-cliente').value,
@@ -491,8 +997,9 @@
                 tipoImovel: document.getElementById('tipo-imovel').value,
                 ambiente: document.getElementById('ambiente').value,
                 loja: document.getElementById('loja').value,
-                data: document.getElementById('data').value,
-                horario: document.getElementById('horario').value,
+                data: data,
+                horario: horario,
+                horarioAgendamento: horarioAgendamento,
                 cep: document.getElementById('cep').value,
                 numero: document.getElementById('numero').value,
                 complemento: document.getElementById('complemento').value,
@@ -515,38 +1022,469 @@
         // Limpar formulário
         function limparFormulario() {
             document.getElementById('agendamento-form').reset();
-            document.getElementById('ambiente').innerHTML = '<option value="">Primeiro selecione o tipo de imóvel</option>';
+            selectedAmbientes = [];
+            document.getElementById('ambiente-selected').textContent = 'Primeiro selecione o tipo de imóvel';
+            document.getElementById('ambiente-selected').className = 'text-gray-500';
+            document.getElementById('ambiente').value = '';
+            document.getElementById('ambiente-dropdown').innerHTML = '';
+            document.getElementById('horario-agendamento').value = '';
         }
-// Renderizar lista de agendamentos
+
+        // CRUD Functions
+
+        // Abrir modal de criação
+        function openCreateModal() {
+            editingId = null;
+            modalSelectedAmbientes = [];
+            document.getElementById('modal-title').textContent = 'Criar Novo Agendamento';
+            document.getElementById('create-edit-form').reset();
+            document.getElementById('modal-ambiente-selected').textContent = 'Selecione os ambientes';
+            document.getElementById('modal-ambiente-selected').className = 'text-gray-500';
+            document.getElementById('modal-ambiente').value = '';
+            document.getElementById('modal-ambiente-dropdown').innerHTML = '';
+            document.getElementById('modal-status').value = 'agendado';
+            document.getElementById('modal-horario-agendamento').value = '';
+            document.getElementById('create-edit-modal').classList.remove('hidden');
+        }
+
+        // Editar agendamento
+        function editAgendamento(id) {
+            const agendamento = agendamentos.find(a => a.id === id);
+            if (!agendamento) return;
+            
+            editingId = id;
+            document.getElementById('modal-title').textContent = 'Editar Agendamento';
+            
+            // Preencher dados do modal
+            document.getElementById('modal-id').value = id;
+            document.getElementById('modal-nome').value = agendamento.nomeCliente;
+            document.getElementById('modal-telefone').value = agendamento.telefone;
+            document.getElementById('modal-email').value = agendamento.email;
+            document.getElementById('modal-tipo-imovel').value = agendamento.tipoImovel;
+            document.getElementById('modal-loja').value = agendamento.loja;
+            document.getElementById('modal-data').value = agendamento.data;
+            document.getElementById('modal-horario').value = agendamento.horario;
+            document.getElementById('modal-cep').value = agendamento.cep;
+            document.getElementById('modal-numero').value = agendamento.numero;
+            document.getElementById('modal-complemento').value = agendamento.complemento;
+            document.getElementById('modal-logradouro').value = agendamento.logradouro;
+            document.getElementById('modal-bairro').value = agendamento.bairro;
+            document.getElementById('modal-cidade').value = agendamento.cidade;
+            document.getElementById('modal-observacao').value = agendamento.observacao;
+            document.getElementById('modal-status').value = agendamento.status;
+            document.getElementById('modal-horario-agendamento').value = agendamento.horarioAgendamento || '';
+            
+            // Atualizar ambientes e selecionar os corretos
+            updateModalAmbientes();
+            setTimeout(() => {
+                if (agendamento.ambiente) {
+                    modalSelectedAmbientes = agendamento.ambiente.split(', ');
+                    updateModalAmbienteDisplay();
+                    // Marcar checkboxes
+                    modalSelectedAmbientes.forEach(ambiente => {
+                        const checkbox = document.getElementById(`modal-amb-${ambiente}`);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+            }, 100);
+            
+            document.getElementById('create-edit-modal').classList.remove('hidden');
+        }
+
+        // Duplicar agendamento
+        function duplicateAgendamento(id) {
+            const agendamento = agendamentos.find(a => a.id === id);
+            if (!agendamento) return;
+            
+            const novoAgendamento = {
+                ...agendamento,
+                id: Date.now(),
+                nomeCliente: agendamento.nomeCliente + ' (Cópia)',
+                status: 'agendado',
+                criadoEm: new Date().toISOString()
+            };
+
+            agendamentos.push(novoAgendamento);
+            localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+            
+            showToast('Agendamento duplicado com sucesso!');
+            filtrarAgendamentos();
+            updateDashboard();
+        }
+
+        // Visualizar agendamento
+        function viewAgendamento(id) {
+            const agendamento = agendamentos.find(a => a.id === id);
+            if (!agendamento) return;
+            
+            const content = document.getElementById('view-content');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-3">
+                        <div>
+                            <span class="font-medium text-gray-700">Cliente:</span>
+                            <span class="ml-2">${agendamento.nomeCliente}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Telefone:</span>
+                            <span class="ml-2">${agendamento.telefone}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">E-mail:</span>
+                            <span class="ml-2">${agendamento.email}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Tipo de Imóvel:</span>
+                            <span class="ml-2">${agendamento.tipoImovel}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Ambiente:</span>
+                            <span class="ml-2">${agendamento.ambiente}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Loja:</span>
+                            <span class="ml-2">${agendamento.loja}</span>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <span class="font-medium text-gray-700">Data:</span>
+                            <span class="ml-2">${formatDate(agendamento.data)}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Horário:</span>
+                            <span class="ml-2">${agendamento.horario}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Status:</span>
+                            <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(agendamento.status)}">
+                                ${getStatusText(agendamento.status)}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">CEP:</span>
+                            <span class="ml-2">${agendamento.cep}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Endereço:</span>
+                            <span class="ml-2">${agendamento.logradouro}, ${agendamento.numero}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Bairro:</span>
+                            <span class="ml-2">${agendamento.bairro}</span>
+                        </div>
+                        <div>
+                            <span class="font-medium text-gray-700">Cidade:</span>
+                            <span class="ml-2">${agendamento.cidade}</span>
+                        </div>
+                    </div>
+                </div>
+                ${agendamento.complemento ? `
+                    <div class="mt-4">
+                        <span class="font-medium text-gray-700">Complemento:</span>
+                        <span class="ml-2">${agendamento.complemento}</span>
+                    </div>
+                ` : ''}
+                ${agendamento.observacao ? `
+                    <div class="mt-4">
+                        <span class="font-medium text-gray-700">Observações:</span>
+                        <div class="mt-2 p-3 bg-gray-50 rounded-lg">${agendamento.observacao}</div>
+                    </div>
+                ` : ''}
+                <div class="mt-4 text-xs text-gray-500">
+                    <span class="font-medium">Criado em:</span>
+                    <span class="ml-2">${formatDateTime(agendamento.criadoEm)}</span>
+                </div>
+            `;
+            
+            document.getElementById('view-modal').classList.remove('hidden');
+        }
+
+        // Salvar formulário do modal
+        function saveCreateEditForm(e) {
+            e.preventDefault();
+            
+            const data = document.getElementById('modal-data').value;
+            const horario = document.getElementById('modal-horario').value;
+            const dataFormatada = new Date(data + 'T00:00:00').toLocaleDateString('pt-BR');
+            const horarioAgendamento = `${dataFormatada} às ${horario}`;
+            
+            const agendamentoData = {
+                nomeCliente: document.getElementById('modal-nome').value,
+                telefone: document.getElementById('modal-telefone').value,
+                email: document.getElementById('modal-email').value,
+                tipoImovel: document.getElementById('modal-tipo-imovel').value,
+                ambiente: document.getElementById('modal-ambiente').value,
+                loja: document.getElementById('modal-loja').value,
+                data: data,
+                horario: horario,
+                horarioAgendamento: horarioAgendamento,
+                cep: document.getElementById('modal-cep').value,
+                numero: document.getElementById('modal-numero').value,
+                complemento: document.getElementById('modal-complemento').value,
+                logradouro: document.getElementById('modal-logradouro').value,
+                bairro: document.getElementById('modal-bairro').value,
+                cidade: document.getElementById('modal-cidade').value,
+                observacao: document.getElementById('modal-observacao').value,
+                status: document.getElementById('modal-status').value
+            };
+
+            if (editingId) {
+                // Editar existente
+                const index = agendamentos.findIndex(a => a.id === editingId);
+                if (index !== -1) {
+                    agendamentos[index] = {
+                        ...agendamentos[index],
+                        ...agendamentoData
+                    };
+                    showToast('Agendamento atualizado com sucesso!');
+                }
+            } else {
+                // Criar novo
+                const novoAgendamento = {
+                    id: Date.now(),
+                    ...agendamentoData,
+                    criadoEm: new Date().toISOString()
+                };
+                agendamentos.push(novoAgendamento);
+                showToast('Agendamento criado com sucesso!');
+            }
+
+            localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+            closeCreateEditModal();
+            filtrarAgendamentos();
+            updateDashboard();
+        }
+
+        // Fechar modal de criar/editar
+        function closeCreateEditModal() {
+            document.getElementById('create-edit-modal').classList.add('hidden');
+            editingId = null;
+            modalSelectedAmbientes = [];
+        }
+
+        // Fechar modal de visualização
+        function closeViewModal() {
+            document.getElementById('view-modal').classList.add('hidden');
+        }
+
+        // Excluir agendamento
+        function deleteAgendamento(id) {
+            if (confirm('Tem certeza que deseja excluir este agendamento?')) {
+                agendamentos = agendamentos.filter(a => a.id !== id);
+                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+                
+                selectedIds.delete(id);
+                
+                showToast('Agendamento excluído com sucesso!');
+                filtrarAgendamentos();
+                updateDashboard();
+            }
+        }
+
+        // Seleção em massa
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('select-all').checked;
+            const headerSelectAll = document.getElementById('header-select-all');
+            
+            if (selectAll) {
+                filteredAgendamentos.forEach(agendamento => {
+                    selectedIds.add(agendamento.id);
+                });
+                headerSelectAll.checked = true;
+            } else {
+                selectedIds.clear();
+                headerSelectAll.checked = false;
+            }
+            
+            updateSelectCheckboxes();
+            updateSelectedCount();
+        }
+
+        function toggleRowSelection(id) {
+            if (selectedIds.has(id)) {
+                selectedIds.delete(id);
+            } else {
+                selectedIds.add(id);
+            }
+            updateSelectedCount();
+        }
+
+        function updateSelectCheckboxes() {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(checkbox => {
+                const id = parseInt(checkbox.dataset.id);
+                checkbox.checked = selectedIds.has(id);
+            });
+        }
+
+        function updateSelectedCount() {
+            const count = selectedIds.size;
+            document.getElementById('selected-count').textContent = count;
+            
+            // Atualizar checkboxes de select all
+            const selectAll = document.getElementById('select-all');
+            const headerSelectAll = document.getElementById('header-select-all');
+            
+            if (count === 0) {
+                selectAll.indeterminate = false;
+                selectAll.checked = false;
+                headerSelectAll.indeterminate = false;
+                headerSelectAll.checked = false;
+            } else if (count === filteredAgendamentos.length) {
+                selectAll.indeterminate = false;
+                selectAll.checked = true;
+                headerSelectAll.indeterminate = false;
+                headerSelectAll.checked = true;
+            } else {
+                selectAll.indeterminate = true;
+                selectAll.checked = false;
+                headerSelectAll.indeterminate = true;
+                headerSelectAll.checked = false;
+            }
+        }
+
+        // Excluir selecionados
+        function deleteSelected() {
+            if (selectedIds.size === 0) {
+                showToast('Nenhum agendamento selecionado', 'error');
+                return;
+            }
+            
+            if (confirm(`Tem certeza que deseja excluir ${selectedIds.size} agendamento(s)?`)) {
+                agendamentos = agendamentos.filter(a => !selectedIds.has(a.id));
+                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+                
+                selectedIds.clear();
+                showToast('Agendamentos excluídos com sucesso!');
+                filtrarAgendamentos();
+                updateDashboard();
+            }
+        }
+
+        // Exportar dados
+        function exportData() {
+            const format = prompt('Escolha o formato de exportação:\n1 - JSON\n2 - CSV\n\nDigite 1 ou 2:');
+            
+            if (format === '1') {
+                exportJSON();
+            } else if (format === '2') {
+                exportCSV();
+            }
+        }
+
+        function exportJSON() {
+            const dataStr = JSON.stringify(agendamentos, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            downloadFile(dataBlob, 'agendamentos.json');
+        }
+
+        function exportCSV() {
+            const headers = [
+                'ID', 'Nome', 'Telefone', 'Email', 'Tipo Imóvel', 'Ambiente', 'Loja',
+                'Data', 'Horário', 'CEP', 'Logradouro', 'Número', 'Complemento',
+                'Bairro', 'Cidade', 'Status', 'Observação', 'Criado Em'
+            ];
+            
+            const csvContent = [
+                headers.join(','),
+                ...agendamentos.map(a => [
+                    a.id,
+                    `"${a.nomeCliente}"`,
+                    `"${a.telefone}"`,
+                    `"${a.email}"`,
+                    `"${a.tipoImovel}"`,
+                    `"${a.ambiente}"`,
+                    `"${a.loja}"`,
+                    a.data,
+                    a.horario,
+                    `"${a.cep}"`,
+                    `"${a.logradouro}"`,
+                    `"${a.numero}"`,
+                    `"${a.complemento || ''}"`,
+                    `"${a.bairro}"`,
+                    `"${a.cidade}"`,
+                    `"${a.status}"`,
+                    `"${a.observacao || ''}"`,
+                    a.criadoEm
+                ].join(','))
+            ].join('\n');
+            
+            const dataBlob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+            downloadFile(dataBlob, 'agendamentos.csv');
+        }
+
+        function downloadFile(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showToast(`Arquivo ${filename} baixado com sucesso!`);
+        }
+
+        // Filtrar agendamentos
+        function filtrarAgendamentos() {
+            const filtroNome = document.getElementById('filtro-nome')?.value.toLowerCase() || '';
+            const filtroEndereco = document.getElementById('filtro-endereco')?.value.toLowerCase() || '';
+            const filtroStatus = document.getElementById('filtro-status')?.value || '';
+            const filtroLoja = document.getElementById('filtro-loja')?.value || '';
+            
+            filteredAgendamentos = agendamentos.filter(agendamento => {
+                const matchNome = agendamento.nomeCliente.toLowerCase().includes(filtroNome);
+                const matchEndereco = `${agendamento.logradouro} ${agendamento.bairro} ${agendamento.cidade}`.toLowerCase().includes(filtroEndereco);
+                const matchStatus = !filtroStatus || agendamento.status === filtroStatus;
+                const matchLoja = !filtroLoja || agendamento.loja === filtroLoja;
+                
+                return matchNome && matchEndereco && matchStatus && matchLoja;
+            });
+            
+            currentPage = 1;
+            selectedIds.clear();
+            renderAgendamentos();
+        }
+
+        // Renderizar lista de agendamentos com paginação
         function renderAgendamentos() {
             const tbody = document.getElementById('agendamentos-list');
             const noAgendamentos = document.getElementById('no-agendamentos');
             
-            let filteredAgendamentos = [...agendamentos];
+            const totalPages = Math.ceil(filteredAgendamentos.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageAgendamentos = filteredAgendamentos.slice(startIndex, endIndex);
             
-            // Aplicar filtros
-            const filtroNome = document.getElementById('filtro-nome')?.value.toLowerCase() || '';
-            const filtroEndereco = document.getElementById('filtro-endereco')?.value.toLowerCase() || '';
-            const filtroStatus = document.getElementById('filtro-status')?.value || '';
+            // Atualizar informações de paginação
+            document.getElementById('current-page').textContent = currentPage;
+            document.getElementById('total-pages').textContent = totalPages || 1;
+            document.getElementById('showing-count').textContent = pageAgendamentos.length;
+            document.getElementById('total-count').textContent = filteredAgendamentos.length;
             
-            filteredAgendamentos = filteredAgendamentos.filter(agendamento => {
-                const matchNome = agendamento.nomeCliente.toLowerCase().includes(filtroNome);
-                const matchEndereco = `${agendamento.logradouro} ${agendamento.bairro} ${agendamento.cidade}`.toLowerCase().includes(filtroEndereco);
-                const matchStatus = !filtroStatus || agendamento.status === filtroStatus;
-                
-                return matchNome && matchEndereco && matchStatus;
-            });
+            // Atualizar botões de paginação
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = currentPage === totalPages || totalPages === 0;
             
             if (filteredAgendamentos.length === 0) {
                 tbody.innerHTML = '';
                 noAgendamentos.classList.remove('hidden');
+                updateSelectedCount();
                 return;
             }
             
             noAgendamentos.classList.add('hidden');
             
-            tbody.innerHTML = filteredAgendamentos.map(agendamento => `
+            tbody.innerHTML = pageAgendamentos.map(agendamento => `
                 <tr class="hover:bg-gray-50">
+                    <td class="px-2 sm:px-4 py-2 sm:py-3">
+                        <input type="checkbox" class="row-checkbox w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500" 
+                               data-id="${agendamento.id}" 
+                               onchange="toggleRowSelection(${agendamento.id})"
+                               ${selectedIds.has(agendamento.id) ? 'checked' : ''}>
+                    </td>
                     <td class="px-2 sm:px-4 py-2 sm:py-3">
                         <div>
                             <div class="font-medium text-gray-900 text-sm">${agendamento.nomeCliente}</div>
@@ -573,89 +1511,43 @@
                     </td>
                     <td class="px-2 sm:px-4 py-2 sm:py-3 text-center">
                         <div class="flex justify-center space-x-1 sm:space-x-2">
+                            <button onclick="viewAgendamento(${agendamento.id})" 
+                                    class="text-green-600 hover:text-green-800 p-1" title="Visualizar">
+                                <i class="fas fa-eye text-sm"></i>
+                            </button>
                             <button onclick="editAgendamento(${agendamento.id})" 
-                                    class="text-blue-600 hover:text-blue-800 p-1">
+                                    class="text-blue-600 hover:text-blue-800 p-1" title="Editar">
                                 <i class="fas fa-edit text-sm"></i>
                             </button>
+                            <button onclick="duplicateAgendamento(${agendamento.id})" 
+                                    class="text-purple-600 hover:text-purple-800 p-1" title="Duplicar">
+                                <i class="fas fa-copy text-sm"></i>
+                            </button>
                             <button onclick="deleteAgendamento(${agendamento.id})" 
-                                    class="text-red-600 hover:text-red-800 p-1">
+                                    class="text-red-600 hover:text-red-800 p-1" title="Excluir">
                                 <i class="fas fa-trash text-sm"></i>
                             </button>
                         </div>
                     </td>
                 </tr>
             `).join('');
+            
+            updateSelectedCount();
         }
 
-        // Função para toggle do menu mobile
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('mobile-menu-icon');
-            
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                mobileMenu.classList.add('hidden');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        // Navegação de páginas
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderAgendamentos();
             }
         }
 
-        // Filtrar agendamentos
-        function filtrarAgendamentos() {
-            renderAgendamentos();
-        }
-
-        // Editar agendamento
-        function editAgendamento(id) {
-            const agendamento = agendamentos.find(a => a.id === id);
-            if (!agendamento) return;
-            
-            editingId = id;
-            document.getElementById('edit-id').value = id;
-            document.getElementById('edit-nome').value = agendamento.nomeCliente;
-            document.getElementById('edit-status').value = agendamento.status;
-            
-            document.getElementById('edit-modal').classList.remove('hidden');
-        }
-
-        // Atualizar agendamento
-        function updateAgendamento(e) {
-            e.preventDefault();
-            
-            const id = parseInt(document.getElementById('edit-id').value);
-            const agendamentoIndex = agendamentos.findIndex(a => a.id === id);
-            
-            if (agendamentoIndex !== -1) {
-                agendamentos[agendamentoIndex].nomeCliente = document.getElementById('edit-nome').value;
-                agendamentos[agendamentoIndex].status = document.getElementById('edit-status').value;
-                
-                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
-                
-                showToast('Agendamento atualizado com sucesso!');
-                closeEditModal();
+        function nextPage() {
+            const totalPages = Math.ceil(filteredAgendamentos.length / itemsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
                 renderAgendamentos();
-                updateDashboard();
-            }
-        }
-
-        // Fechar modal de edição
-        function closeEditModal() {
-            document.getElementById('edit-modal').classList.add('hidden');
-            editingId = null;
-        }
-
-        // Excluir agendamento
-        function deleteAgendamento(id) {
-            if (confirm('Tem certeza que deseja excluir este agendamento?')) {
-                agendamentos = agendamentos.filter(a => a.id !== id);
-                localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
-                
-                showToast('Agendamento excluído com sucesso!');
-                renderAgendamentos();
-                updateDashboard();
             }
         }
 
@@ -696,6 +1588,7 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             position: 'bottom'
@@ -709,6 +1602,11 @@
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('pt-BR');
+        }
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('pt-BR');
         }
 
         function getStatusColor(status) {
@@ -748,44 +1646,34 @@
             }, 3000);
         }
 
-        // Máscara para telefone
-        document.getElementById('telefone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            value = value.replace(/(\d{2})(\d)/, '($1) $2');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
-            e.target.value = value;
-        });
-
-        // Máscara para CEP
-        document.getElementById('cep').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            value = value.replace(/(\d{5})(\d)/, '$1-$2');
-            e.target.value = value;
-        });
-
-        // Fechar modal ao clicar fora
-        document.getElementById('edit-modal').addEventListener('click', function(e) {
+        // Fechar modais ao clicar fora
+        document.getElementById('create-edit-modal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeEditModal();
+                closeCreateEditModal();
             }
         });
 
-        // Função para exportar dados (simulação de backend)
-        function exportarDados() {
-            const dataStr = JSON.stringify(agendamentos, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'agendamentos.json';
-            link.click();
-        }
+        document.getElementById('view-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeViewModal();
+            }
+        });
 
-        // Simular sincronização com servidor
-        function sincronizarDados() {
-            showToast('Dados sincronizados com sucesso!');
-            console.log('Simulando sincronização com backend:', agendamentos);
-        }
+        // Fechar dropdowns ao clicar fora
+        document.addEventListener('click', function(e) {
+            const ambienteContainer = document.getElementById('ambiente-container');
+            const ambienteDropdown = document.getElementById('ambiente-dropdown');
+            const modalAmbienteContainer = document.getElementById('modal-ambiente-container');
+            const modalAmbienteDropdown = document.getElementById('modal-ambiente-dropdown');
+            
+            if (ambienteContainer && !ambienteContainer.contains(e.target)) {
+                ambienteDropdown.classList.add('hidden');
+            }
+            
+            if (modalAmbienteContainer && !modalAmbienteContainer.contains(e.target)) {
+                modalAmbienteDropdown.classList.add('hidden');
+            }
+        });
     </script>
 
 </body></html>
